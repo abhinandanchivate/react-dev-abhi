@@ -2,7 +2,7 @@
 //import './App.css'
 import Footer from './core/components/layouts/Footer'
 import Header from './core/components/layouts/Header'
-import Landing from './core/components/layouts/Landing'
+import RootRouter from './RootRouter'
 
 function App() {
   
@@ -10,8 +10,7 @@ function App() {
   return (
     <>
       <Header />
-      <Landing />
-      <Footer />
+    <RootRouter/>      <Footer />
     </>
   )
 }
