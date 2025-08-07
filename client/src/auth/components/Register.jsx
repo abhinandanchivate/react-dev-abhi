@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { registerUser } from "../services/auth.service";
 
 const Register = () => {
   // state
@@ -15,6 +16,12 @@ const Register = () => {
   const onSubmit = (e) => {
     e.preventDefault(); // prevent default form submission
     console.log("Register form submitted", formData);
+    const result = registerUser({
+      name: formData.name,
+      email: formData.email,
+      password: formData.password,
+    });
+    console.log(result);
     // Here you would typically handle the registration logic, such as sending the data to an API
   };
   // onChange function
