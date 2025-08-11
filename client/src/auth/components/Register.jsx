@@ -1,9 +1,25 @@
 import React, { useState } from "react";
 import { registerUser } from "../services/auth.service";
+import { useDispatch, useSelector } from "react-redux";
+import { registerAction } from "../redux/authAction";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   // state
   // state
+  // dispatch
+  // useDispathc : its a hook returns an object with a dispatch method(thunk ==> async operation) ==> to call our actions.
+  // thunk : will start its journey from component to reducer to share the data via action
+  const dispatch = useDispatch();
+  // useReducer ; to get the data from the store.
+
+  // reducer / data from the state
+  const isAuthenticated = useSelector(
+    (state) => state.authReducer.isAuthenticated
+  );
+
+  // navigation hook
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "abhi",
     email: "",
@@ -16,12 +32,15 @@ const Register = () => {
   const onSubmit = (e) => {
     e.preventDefault(); // prevent default form submission
     console.log("Register form submitted", formData);
-    const result = registerUser({
-      name: formData.name,
-      email: formData.email,
-      password: formData.password,
-    });
-    console.log(result);
+    dispatch(registerAction({ name, email, password }));
+    // we need to call our action
+
+    // const result = registerUser({
+    //   name: formData.name,
+    //   email: formData.email,
+    //   password: formData.password,
+    // });
+    // console.log(result);
     // Here you would typically handle the registration logic, such as sending the data to an API
   };
   // onChange function
@@ -42,6 +61,9 @@ const Register = () => {
   // const
   // formData state variables / name
   // setFormData function to update state ==> change the data there , we have to use the setFormData function
+  if (isAuthenticated) {
+    navigate("/dashboard/");
+  }
   return (
     <>
       <section class="container">

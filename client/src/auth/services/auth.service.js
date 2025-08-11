@@ -11,7 +11,18 @@ import API from "../../utils/api";
 export const registerUser = async (userData) => {
   try {
     const response = await API.post("/users", userData);
+    console.log("response.data.token" + response.data.token);
     return response.data.token;
+  } catch (err) {
+    const res = err.response;
+    return res;
+  }
+};
+// to load user /api/auth method get
+export const loadUser = async () => {
+  try {
+    const response = await API.get("/auth");
+    return response.data;
   } catch (err) {
     const res = err.response;
     return res;

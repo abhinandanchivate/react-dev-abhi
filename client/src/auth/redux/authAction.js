@@ -1,5 +1,20 @@
-import { registerUser } from "../services/auth.service";
-import { AUTH_ERROR, REGISTER_SUCCESS } from "./types";
+import { loadUser, registerUser } from "../services/auth.service";
+import { AUTH_ERROR, REGISTER_SUCCESS, USER_LOADED } from "./types";
+
+// api/auth : get method to load the user details
+export const loadUserDetailsAction = () => async (dispatch) => {
+  try {
+    const res = await loadUser();
+    dispatch({
+      type: USER_LOADED,
+      payload: res,
+    });
+  } catch (err) {
+    dispatch({
+      type: AUTH_ERROR,
+    });
+  }
+};
 
 // will hold the changes needs to be done in the store.
 export const registerAction = (formData) => async (dispatch) => {
@@ -8,10 +23,11 @@ export const registerAction = (formData) => async (dispatch) => {
   // redux thunk will provide the same .
   try {
     const res = await registerUser(formData);
+    console.log(res);
 
     dispatch({
       type: REGISTER_SUCCESS,
-      payload: res.data,
+      payload: res,
     });
   } catch (err) {
     dispatch({
