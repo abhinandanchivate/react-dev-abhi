@@ -1,1 +1,28 @@
+import { REGISTER_SUCCESS } from "./types";
+
 // will hold the changes needs to be done in the store.
+const initialState = {
+  user: null, // to hold the user related info
+
+  loading: false, // we need spinner while confirming the data / credentials with BE
+  isAuthenticated: null, // to confirm that user is already authenticated
+  errors: null, // to get the form handling errors.
+};
+
+export default (state = initialState, action) => {
+  const { type, payload } = action;
+  // destructuring .
+  switch (type) {
+    case REGISTER_SUCCESS:
+      return {
+        ...state,
+        token: payload,
+        isAuthenticated: true,
+        loading: false,
+        errors: [],
+      };
+
+    default:
+      return state;
+  }
+};

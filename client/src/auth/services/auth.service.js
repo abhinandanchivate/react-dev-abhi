@@ -9,6 +9,11 @@
 import API from "../../utils/api";
 
 export const registerUser = async (userData) => {
-  const response = await API.post("/users", userData);
-  return response.data;
+  try {
+    const response = await API.post("/users", userData);
+    return response.data.token;
+  } catch (err) {
+    const res = err.response;
+    return res;
+  }
 };
