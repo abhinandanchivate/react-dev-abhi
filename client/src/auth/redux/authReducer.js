@@ -20,6 +20,7 @@ export default (state = initialState, action) => {
         user: payload, // user loaded will bring ==> user data
       };
     case REGISTER_SUCCESS:
+      localStorage.setItem("token", payload);
       return {
         ...state,
         token: payload,

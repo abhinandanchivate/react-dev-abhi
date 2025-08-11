@@ -5,6 +5,7 @@ import { AUTH_ERROR, REGISTER_SUCCESS, USER_LOADED } from "./types";
 export const loadUserDetailsAction = () => async (dispatch) => {
   try {
     const res = await loadUser();
+    console.log("load user action" + res);
     dispatch({
       type: USER_LOADED,
       payload: res,
@@ -29,6 +30,7 @@ export const registerAction = (formData) => async (dispatch) => {
       type: REGISTER_SUCCESS,
       payload: res,
     });
+    dispatch(loadUserDetailsAction());
   } catch (err) {
     dispatch({
       type: AUTH_ERROR,
