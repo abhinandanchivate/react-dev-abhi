@@ -15,7 +15,8 @@ export const registerUser = async (userData) => {
     return response.data.token;
   } catch (err) {
     const res = err.response;
-    return res;
+    console.log(JSON.stringify(res));
+    throw { data: err.response.data.errors, status: "fail" };
   }
 };
 // to load user /api/auth method get

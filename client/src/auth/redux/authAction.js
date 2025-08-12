@@ -1,3 +1,4 @@
+import { setAlert } from "../../core/redux/coreActions";
 import { loadUser, registerUser } from "../services/auth.service";
 import { AUTH_ERROR, REGISTER_SUCCESS, USER_LOADED } from "./types";
 
@@ -30,8 +31,18 @@ export const registerAction = (formData) => async (dispatch) => {
       type: REGISTER_SUCCESS,
       payload: res,
     });
+    //success alert
+    dispatch(setAlert("Registered successfully", "success"));
     dispatch(loadUserDetailsAction());
   } catch (err) {
+    const errors = err.data;
+    console.log(JSON.stringify(errors));
+    // err.data
+    if (errors) {
+      errors.forEach((error) => {
+        dispatch(setAlert(error.msg, "danger"));
+      });
+    }
     dispatch({
       type: AUTH_ERROR,
     });
