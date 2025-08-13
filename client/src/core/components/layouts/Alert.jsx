@@ -1,7 +1,20 @@
-import React from "react";
+import { useSelector } from "react-redux";
 
-const Alert = () => {
-  return <>Alert</>;
-};
+export default function Alert() {
+  const alerts = useSelector((state) => state.coreReducer ?? []);
 
-export default Alert;
+  if (!alerts?.length) return null;
+
+  return (
+    <div className="alert-wrapper" aria-live="polite" aria-atomic="true">
+      {alerts.map((a) => {
+        const type = a.alertType ?? a.type ?? "info"; // supports both keys
+        return (
+          <div key={a.id} className={`alert alert-${type}`} role="alert">
+            {a.msg}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
